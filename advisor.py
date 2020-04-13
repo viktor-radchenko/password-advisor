@@ -12,7 +12,7 @@ def request_api_data(querry_chars):
 	return res
 
 def get_password_leaks_count(hashes, hash_to_check):
-	'''Count how many time password was hacked'''
+	'''Compare hashes in hash table requested to calculate how many time password were hacked'''
 	hashes = (line.split(':') for line in hashes.text.splitlines())
 	for h, count in hashes:
 		if h == hash_to_check:
