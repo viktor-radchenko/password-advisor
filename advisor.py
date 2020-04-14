@@ -1,6 +1,7 @@
 import requests
 import hashlib
 import sys
+from strgen import StringGenerator
 
 
 def request_api_data(querry_chars):
@@ -26,15 +27,29 @@ def pwned_api_check(password):
 	response = request_api_data(first5_char)
 	return get_password_leaks_count(response, tail)
 
+def generate_password():
+	sugested_password = StringGenerator('([a-zA-Z0-9]{5}-)([a-zA-Z0-9]{5}-)([a-zA-Z0-9]{5})').render()
+	return sugested_password
+
 def main(args):
 	'''Initialize hashing algorithm and prints results per password'''
 	for password in args:
 		count = pwned_api_check(password)
 		if count:
 			print(f'{password} was found {count} times. You should consider changing it!')
+			print(f'Would you like to use new secure password instead: {generate_password()}')
+			'''Context menu to ask if user needs new secured password'''
+			while True:
+				user_action = input('\nWould you like to generate another one? Type [Y]es or [N]o: ').lower()
+				if user_action == 'y':
+					print(generate_password())
+				elif user_action == 'n':
+					return "\nThank you for using your Password Advisor. Have a great day!"				
+				else:
+					print('Something went wrong. Check your answer again, please.')
 		else:
 			print(f'{password} was NOT found. You can safely use it!')
-	return "done!"
+	return "Done!"
 
 
 if __name__ == "__main__":
