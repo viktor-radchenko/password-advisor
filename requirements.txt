@@ -5,4 +5,4 @@ pyPdf==1.13
 PyPDF2==1.26.0
 requests==2.23.0
 StringGenerator==0.3.3
-urllib3==1.25.9
+urllib3==1.26.5
